@@ -27,11 +27,11 @@ services:
     restart: unless-stopped
     network_mode: host
     environment:
-      - SPAHOST: spa2102
-      - SPAUSER: user
+      - SPAHOST=spa2102
+      - SPAUSER=user
       - SPAPASS
-      - MHOST: localhost
-      - MUSER: homeassistant
+      - MHOST=localhost
+      - MUSER=homeassistant
       - MPASS
   lms:
     container_name: lms

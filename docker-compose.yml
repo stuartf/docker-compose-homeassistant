@@ -1,0 +1,60 @@
+version: '3.5'
+services:
+  homeassistant:
+    container_name: homeassistant
+    image: "ghcr.io/home-assistant/home-assistant:stable"
+    volumes:
+      - ${CONFIG_PATH}/config:/config
+      - /etc/localtime:/etc/localtime:ro
+      - /media:/media
+    devices:
+      - /dev/ttyUSB0:/dev/ttyUSB0
+    restart: unless-stopped
+    privileged: true
+    network_mode: host
+  mqtt:
+    container_name: mqtt
+    image: eclipse-mosquitto
+    volumes:
+      - ${CONFIG_PATH}/mosquitto/config:/mosquitto/config
+      - ${CONFIG_PATH}/mosquitto/data:/mosquitto/data
+      - ${CONFIG_PATH}/mosquitto/log:/mosquitto/log
+    restart: unless-stopped
+    network_mode: host
+  voipstatus:
+    container_name: voipstatus
+    image: stuartfreeman/voipstatus
+    restart: unless-stopped
+    network_mode: host
+    environment:
+      - SPAHOST: spa2102
+      - SPAUSER: user
+      - SPAPASS
+      - MHOST: localhost
+      - MUSER: homeassistant
+      - MPASS
+  lms:
+    container_name: lms
+    image: lmscommunity/logitechmediaserver
+    volumes:
+      - ${CONFIG_PATH}/lms/config:/config:rw
+      - /media:/music:ro
+      - ${CONFIG_PATH}/lms/playlist:/playlist:rw
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+    ports:
+      - 9000:9000/tcp
+      - 9090:9090/tcp
+      - 3483:3483/tcp
+      - 3483:3483/udp
+    restart: unless-stopped
+  esphome:
+    container_name: esphome
+    image: esphome/esphome
+    command: dashboard --username admin --password ${ESP_PASS} /config
+    volumes:
+      - ${CONFIG_PATH}/esphome/config:/config
+      - /etc/localtime:/etc/localtime:ro
+    restart: unless-stopped
+    privileged: true
+    network_mode: host

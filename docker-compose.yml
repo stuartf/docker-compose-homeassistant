@@ -50,7 +50,7 @@ services:
     restart: unless-stopped
   esphome:
     container_name: esphome
-    image: esphome/esphome
+    image: esphome/esphome-aarch64
     command: dashboard --username admin --password ${ESP_PASS} /config
     volumes:
       - ${CONFIG_PATH}/esphome/config:/config

@@ -4,7 +4,7 @@ services:
     container_name: homeassistant
     image: "ghcr.io/home-assistant/home-assistant:stable"
     volumes:
-      - ${CONFIG_PATH}/config:/config
+      - ${CONFIG_PATH}/homeassistant/config:/config
       - /etc/localtime:/etc/localtime:ro
       - /media:/media
     devices:

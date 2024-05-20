@@ -20,17 +20,17 @@ services:
       - ${CONFIG_PATH}/mosquitto/data:/mosquitto/data
       - ${CONFIG_PATH}/mosquitto/log:/mosquitto/log
     restart: unless-stopped
-    network_mode: host
+    ports:
+      - 1883:1883/tcp
   voipstatus:
     container_name: voipstatus
     image: stuartfreeman/voipstatus
     restart: unless-stopped
-    network_mode: host
     environment:
       - SPAHOST=spa2102
       - SPAUSER=user
       - SPAPASS
-      - MHOST=localhost
+      - MHOST=mqtt
       - MUSER=homeassistant
       - MPASS
   lms:

@@ -34,7 +34,7 @@ services:
       - MPASS
   lms:
     container_name: lms
-    image: lmscommunity/logitechmediaserver
+    image: lmscommunity/lyrionmusicserver
     volumes:
       - ${CONFIG_PATH}/lms/config:/config:rw
       - /media:/music:ro

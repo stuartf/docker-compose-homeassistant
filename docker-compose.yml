@@ -68,3 +68,15 @@ services:
     volumes:
       - ${CONFIG_PATH}/matter-server/data:/data/
       - /run/dbus:/run/dbus:ro
+  music-assistant:
+    image: ghcr.io/music-assistant/server:latest
+    container_name: music-assistant
+    restart: unless-stopped
+    # Network mode must be set to host for MA to discover and stream to players
+    network_mode: host
+    volumes:
+      - ${CONFIG_PATH}/music-assistant/data:/data/
+      # Optional: expose local music to MA by bind-mounting it read-only
+      - /media:/media:ro
+    environment:
+      - LOG_LEVEL=info

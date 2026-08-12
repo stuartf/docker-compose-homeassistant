@@ -80,3 +80,7 @@ services:
       - /media:/media:ro
     environment:
       - LOG_LEVEL=info
+  ytdlp-tokens:
+    image: brainicism/bgutil-ytdlp-pot-provider
+    ports:
+      - 4416:4416/tcp
